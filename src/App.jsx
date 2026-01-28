@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Upload } from "lucide-react";
+import { Camera } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
+	const [image, setImage] = useState(null);
+	const navigate = useNavigate();
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+	const handleImageUpload = (event) => {
+		const file = event.target.files[0];
+		if (file) {
+			const reader = new FileReader();
+			reader.onload = (event) => {
+				setImage(event.target.result);
+				navigate("/image-viewer", { state: { image: event.target.result } });
+			};
+			reader.readAsDataURL(file);
+		}
+	};
+
+	return (
+		<div className="flex items-center justify-center min-h-screen gap-5">
+			<button className="w-50 h-50 rounded-lg bg-[#202020] flex flex-col justify-center items-center cursor-pointer relative hover:bg-[#191919] transition">
+				<Upload size={50} className="m-2" />
+				<span className="text-xl">Upload</span>
+				<input
+					type="file"
+					accept="image/*"
+					onChange={handleImageUpload}
+					className="absolute w-50 h-50 opacity-0 cursor-pointer"
+				/>
+			</button>
+
+			<Link to="/camera">
+				<button className="w-50 h-50 rounded-lg bg-[#202020] flex flex-col justify-center items-center cursor-pointer hover:bg-[#191919] transition">
+					<Camera size={50} className="m-2" />
+					<span className="text-xl">Camera</span>
+				</button>
+			</Link>
+		</div>
+	);
 }
 
-export default App
+export default App;
