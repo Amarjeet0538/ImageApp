@@ -1,18 +1,19 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft, Pencil} from "lucide-react";
 import useEscapeKey from "../../hooks/useEscapeKey.jsx";
 import { useState } from "react";
-import { Pencil } from "lucide-react";
-import ImageEditor from "./ImageEditor.jsx"
+import { useImageContext } from "../../context/ImageContext";
+import ImageEditor from "../ImageEditor/ImageEditor.jsx";
+import CanvasImageViewer from "./CanvasImageViewer.jsx";
 
 function ImageViewer() {
-	const location = useLocation();
 	const navigate = useNavigate();
-	const { image } = location.state || {};
+  const { currentImage } = useImageContext();
 	const [openEditor, setOpenEditor] = useState(false);
-		useEscapeKey(() => navigate("/"));
 
-		if (!image) {
+	useEscapeKey(() => navigate("/"));
+
+	if (!currentImage) {
 		return (
 			<div className="flex items-center justify-center min-h-screen">
 				No image selected
@@ -21,34 +22,36 @@ function ImageViewer() {
 	}
 
 	return (
-		<div className="relative flex flex-col items-center justify-center min-h-screen bg-black gap-4">
+		<div className="relative flex flex-col min-h-screen bg-black gap-4">
 			<button
 				onClick={() => navigate("/")}
-        className="absolute top-5 left-5 text-white rounded-lg bg-gray-800 p-3 hover:bg-gray-700 hover:text-red-400 transition z-10"
+				className="absolute top-5 left-5  rounded-lg bg-[#202020]  p-3 hover:bg-gray-700 hover:text-red-400 transition z-10"
 			>
 				<ArrowLeft />
 			</button>
 
-		<button
+			<button
 				onClick={() => setOpenEditor(!openEditor)}
-        className="absolute top-5 right-5 text-white rounded-lg bg-gray-800 p-3 hover:bg-gray-700 hover:text-red-400 transition z-10"
+				className="absolute top-5 right-5 text-white rounded-lg bg-[#202020]  p-3 hover:bg-gray-700 hover:text-red-400 transition z-10"
 			>
-				<Pencil/>
+				<Pencil />
 			</button>
 
+      <div className="flex flex-1 gap-6 min-h-0 ">
+        <div className="flex-1 min-h-0 flex flex-col">
+          <CanvasImageViewer />
+        </div>
 
 
-			<div className="flex flex-row justify-around items-center w-full px-4">
-					<img src={image} alt="Uploaded" className=" rounded-lg object-cover w-full max-w-6xl " />
 
-					{openEditor &&
-						<div className="text-white text-center">
-							<ImageEditor/>
-						</div>
-					}
-			</div>
-		</div>
-	);
+        {openEditor && (
+          <div >
+            <ImageEditor  />
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default ImageViewer;
