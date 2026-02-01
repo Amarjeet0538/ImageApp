@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useImageContext } from "../../context/ImageContext";
 import ImageEditor from "../ImageEditor/ImageEditor.jsx";
 import CanvasImageViewer from "./CanvasImageViewer.jsx";
+import { useEffect } from "react";
 
 function ImageViewer() {
 	const navigate = useNavigate();
@@ -32,7 +33,7 @@ function ImageViewer() {
 
 			<button
 				onClick={() => setOpenEditor(!openEditor)}
-				className="absolute top-5 right-5 text-white rounded-lg bg-[#202020]  p-3 hover:bg-gray-700 hover:text-red-400 transition z-10"
+				className={`absolute top-5 right-5 text-white rounded-lg bg-[#202020]  p-3 hover:bg-gray-700 hover:text-red-400 transition z-10 ${openEditor ? "right-115" : ""}`}
 			>
 				<Pencil />
 			</button>
