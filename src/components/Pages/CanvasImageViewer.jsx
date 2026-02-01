@@ -10,6 +10,7 @@ export default function CanvasImageViewer() {
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
+  
   useEffect(() => {
     if (!canvasRef.current || !currentImage) return;
 

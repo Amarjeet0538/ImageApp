@@ -13,10 +13,58 @@ const ImageEditor = () => {
 
 	const { currentImage, getCurrentImage, updateEditedImage } =useImageContext();
 
-
   useEffect(() => {
-    
-  }, [brightness, contrast, saturation, noise, blur, currentImage, getCurrentImage]);
+    if (!currentImage) return;
+
+    const imageUrl = getCurrentImage();
+    if (!imageUrl) return;
+
+    const canvas = document.querySelector("canvas:not(.hidden)");
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+
+    img.onload = () => {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const filterString = `
+        brightness(${100 + brightness}%)
+        contrast(${100 + contrast}%)
+        saturate(${100 + saturation}%)
+        blur(${blur}px)
+      `;
+
+      ctx.filter = filterString;
+
+      const canvasAspect = canvas.width / canvas.height;
+      const imgAspect = img.width / img.height;
+
+      let drawWidth, drawHeight, drawX, drawY;
+
+      if (canvasAspect > imgAspect) {
+        drawHeight = canvas.height;
+        drawWidth = drawHeight * imgAspect;
+      } else {
+        drawWidth = canvas.width;
+        drawHeight = drawWidth / imgAspect;
+      }
+
+      drawX = (canvas.width - drawWidth) / 2;
+      drawY = (canvas.height - drawHeight) / 2;
+
+      // Draw image with filters applied
+      ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
+    };
+
+    img.src = imageUrl;
+  }, [brightness, contrast, saturation, blur, currentImage, getCurrentImage]);
 
 
 	const handleApply = () => {
