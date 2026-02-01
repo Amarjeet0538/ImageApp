@@ -1,16 +1,30 @@
-# React + Vite
+##Image Editor 
+A modern, feature-rich image editing application built with React, featuring real-time filters, canvas manipulation, and intuitive UI controls.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+###Features
+####Image Capture & Upload
 
-Currently, two official plugins are available:
+Upload Images - Drag and drop or browse to upload images
+Webcam Capture - Take photos directly from your webcam
+Real-time Preview - Instant preview of captured/uploaded images
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+####Advanced Viewing
 
-## React Compiler
+Zoom Control - Scroll wheel or buttons (0.5x - 5x magnification)
+Pan/Drag - Click and drag to move around the image
+Rotation - Rotate 90° left or right with dedicated buttons
+Reset View - Reset zoom, pan, and rotation to original state
+Dotted Background - Professional grid pattern for better visual reference
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+####Real-Time Filters
 
-## Expanding the ESLint configuration
+Brightness - Adjust from -100 to +100
+Contrast - Control image detail (-100 to +100)
+Saturation - Make colors vivid or grayscale (-100 to +100)
+Blur - Apply blur effect (0 to 20px)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+####File Operations
+
+Download - Export edited images as PNG
+Apply Edits - Save edits to image context
+Reset Filters - Return all filters to default values
